@@ -90,33 +90,70 @@
       }
     }
 
-    /* Partículas de brillo mágico de fondo (círculos) */
-    .magic-sparkle {
+    /* Brillos plateados cayendo (círculos) */
+    .falling-sparkle-circle {
       position: absolute;
-      background: radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(203,213,225,0.4) 60%, transparent 100%);
+      background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(226,232,240,0.85) 45%, rgba(148,163,184,0.1) 85%, transparent 100%);
       border-radius: 50%;
       pointer-events: none;
-      animation: twinkle 3s infinite ease-in-out;
+      z-index: 15;
+      animation: falling-glitter-anim linear infinite;
     }
 
-    @keyframes twinkle {
-      0%, 100% { opacity: 0; transform: scale(0.4) translateY(0); }
-      50% { opacity: 0.8; transform: scale(1.1) translateY(-12px); }
-    }
-
-    /* Partículas de estrellas mágicas de fondo (clip-path de 4 puntas) */
-    .magic-sparkle-star {
+    /* Brillos plateados cayendo (estrellas de 4 puntas) */
+    .falling-sparkle-star {
       position: absolute;
       background: white;
       clip-path: polygon(50% 0%, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0% 50%, 39% 39%);
       filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.95));
       pointer-events: none;
-      animation: twinkle-star 4s infinite ease-in-out;
+      z-index: 15;
+      animation: falling-glitter-anim linear infinite;
     }
 
-    @keyframes twinkle-star {
-      0%, 100% { opacity: 0; transform: scale(0.2) rotate(0deg); }
-      50% { opacity: 0.9; transform: scale(1.1) rotate(90deg); }
+    /* Animación estándar desde arriba hasta el fondo con deriva lateral (drift) */
+    @keyframes falling-glitter-anim {
+      0% {
+        top: -20px;
+        transform: translateX(0) rotate(0deg) scale(0.3);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+        transform: translateX(calc(var(--drift-x) * 0.2)) rotate(45deg) scale(1);
+      }
+      35% {
+        transform: translateX(var(--drift-x)) rotate(135deg) scale(0.8);
+      }
+      70% {
+        transform: translateX(calc(var(--drift-x) * -0.5)) rotate(270deg) scale(1.1);
+        opacity: 0.9;
+      }
+      90% {
+        opacity: 0.9;
+      }
+      100% {
+        top: 102%;
+        transform: translateX(calc(var(--drift-x) * 0.3)) rotate(360deg) scale(0.3);
+        opacity: 0;
+      }
+    }
+
+    /* Animación para los brillos iniciales (comienzan a mitad de camino y caen) */
+    @keyframes falling-glitter-drift {
+      0% {
+        transform: translateX(0) rotate(0deg) scale(0.6);
+        opacity: 0;
+      }
+      15% {
+        opacity: 1;
+        transform: translateX(calc(var(--drift-x) * 0.3)) rotate(45deg) scale(1);
+      }
+      100% {
+        top: 102%;
+        transform: translateX(var(--drift-x)) rotate(240deg) scale(0.3);
+        opacity: 0;
+      }
     }
 
     /* Animación de rotación lenta para el reproductor de música */
@@ -516,43 +553,64 @@
       updateCountdown();
       setInterval(updateCountdown, 1000);
 
-      // 2. Generador de Brillos Mágicos de Fondo (Ambiental - Círculos y Estrellas)
-      const generateMagicSparkles = () => {
+      // 2. Generador de Brillos Plateados Cayendo (Lluvia de Purpurina)
+      const startFallingGlitters = () => {
         const mainCard = document.querySelector('main');
         if (!mainCard) return;
 
-        // Generamos un mix de 18 brillos circulares y 14 estrellas clip-path
-        for (let i = 0; i < 32; i++) {
-          const isStar = Math.random() > 0.55;
-          const sparkle = document.createElement('div');
+        // Generador de brillo individual
+        const spawnGlitter = (initialY = null) => {
+          const isStar = Math.random() > 0.45;
+          const glitter = document.createElement('div');
           
           if (isStar) {
-            sparkle.classList.add('magic-sparkle-star');
-            const size = Math.random() * 6 + 9; // estrellas de 9px a 15px
-            sparkle.style.width = `${size}px`;
-            sparkle.style.height = `${size}px`;
+            glitter.classList.add('falling-sparkle-star');
+            const size = Math.random() * 7 + 7; // de 7px a 14px
+            glitter.style.width = `${size}px`;
+            glitter.style.height = `${size}px`;
           } else {
-            sparkle.classList.add('magic-sparkle');
-            const size = Math.random() * 4 + 2.5; // círculos de 2.5px a 6.5px
-            sparkle.style.width = `${size}px`;
-            sparkle.style.height = `${size}px`;
+            glitter.classList.add('falling-sparkle-circle');
+            const size = Math.random() * 4 + 2.5; // de 2.5px a 6.5px
+            glitter.style.width = `${size}px`;
+            glitter.style.height = `${size}px`;
           }
 
+          // Posición horizontal
           const x = Math.random() * 100;
-          const y = Math.random() * 100;
-          const delay = Math.random() * 4;
-          const duration = Math.random() * 3 + 2.5; // de 2.5s a 5.5s
+          glitter.style.left = `${x}%`;
 
-          sparkle.style.left = `${x}%`;
-          sparkle.style.top = `${y}%`;
-          sparkle.style.animationDelay = `${delay}s`;
-          sparkle.style.animationDuration = `${duration}s`;
+          // Duración de la caída (velocidad variable)
+          const duration = Math.random() * 3.5 + 4.5; // de 4.5s a 8s
+          glitter.style.animationDuration = `${duration}s`;
 
-          mainCard.appendChild(sparkle);
+          // Deriva horizontal (drift) aleatoria
+          const drift = (Math.random() * 40 - 20) + 'px';
+          glitter.style.setProperty('--drift-x', drift);
+
+          // Si es inicio, los distribuimos a alturas aleatorias
+          if (initialY !== null) {
+            glitter.style.top = `${initialY}%`;
+            glitter.style.animationName = 'falling-glitter-drift';
+          }
+
+          mainCard.appendChild(glitter);
+
+          // Eliminar al terminar la animación
+          setTimeout(() => {
+            glitter.remove();
+          }, duration * 1000);
+        };
+
+        // Generar 18 brillos iniciales esparcidos a diferentes alturas
+        for (let i = 0; i < 18; i++) {
+          spawnGlitter(Math.random() * 95);
         }
+
+        // Seguir spawnando brillos a un ritmo constante de caída
+        setInterval(() => spawnGlitter(), 280);
       };
 
-      window.addEventListener('DOMContentLoaded', generateMagicSparkles);
+      window.addEventListener('DOMContentLoaded', startFallingGlitters);
 
       // 3. Controlador Global de Música de Fondo
       const music = document.getElementById("bg-music");
