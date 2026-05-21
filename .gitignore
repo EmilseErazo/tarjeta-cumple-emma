@@ -1,0 +1,14 @@
+# Ignorar archivos de diseño súper pesados y archivos no usados en producción
+Fotos/*.ai
+Fotos/*.eps
+Fotos/*.zip
+Fotos/309258-P8VPIM-612.jpg
+Fotos/309258-P8VPIN-521.jpg
+Fotos/5c2e50f9-e5cb-49f6-a3be-1c21f9e51177.jpg
+
+# Ignorar carpetas del editor y logs locales
+.antigravitycli/
+.gemini/
+.vscode/
+.idea/
+*.log
