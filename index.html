@@ -128,6 +128,14 @@
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
     }
+
+    /* Dar cuerpo a la fuente cursiva fina para máxima legibilidad sin perder elegancia */
+    .cursive-elegant {
+      font-family: 'Pinyon Script', cursive;
+      text-shadow: 
+        0 0 0.35px currentColor,
+        0 0 0.35px currentColor;
+    }
   </style>
 </head>
 <body class="bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] min-h-screen flex items-center justify-center p-0 sm:p-4 md:p-6 font-sans antialiased text-slate-800">
@@ -167,7 +175,7 @@
       </h1>
 
       <!-- Subtítulo en Manuscrita Elegante (Texto blanco de alto contraste sobre la foto) -->
-      <p class="absolute bottom-4 left-6 right-6 text-white font-script text-4xl drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)] tracking-wide">
+      <p class="absolute bottom-4 left-6 right-6 text-white cursive-elegant text-[38px] drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)] tracking-wide">
         Un año más para brillar!!!
       </p>
     </div>
@@ -251,7 +259,7 @@
       
       <!-- Agenda la fecha (Título en cursiva elegante) -->
       <div class="space-y-1 mt-2 fade-in-up" style="animation-delay: 0.1s;">
-        <h2 class="font-cursive text-4xl text-slate-800 tracking-wide">Agenda la fecha</h2>
+        <h2 class="cursive-elegant text-[42px] text-slate-900 tracking-wide">Agenda la fecha</h2>
       </div>
 
       <!-- 2. Bloque de Calendario (Réplica Fiel de la Tarjeta Física) -->
@@ -371,8 +379,8 @@
             <span class="text-4xl font-extrabold text-slate-800 leading-none tracking-tight">6</span>
           </div>
           <!-- Mes Junio Superpuesto (Sin fondo, overlay limpio) -->
-          <div class="absolute bottom-[-10px] left-1/2 -translate-x-1/2 z-10 pointer-events-none">
-            <span class="font-cursive text-4xl text-slate-800 transform -rotate-[6deg] inline-block whitespace-nowrap drop-shadow-[0_2px_4px_rgba(255,255,255,0.9)]">
+          <div class="absolute bottom-[-12px] left-1/2 -translate-x-1/2 z-10 pointer-events-none">
+            <span class="cursive-elegant text-[44px] text-slate-900 transform -rotate-[6deg] inline-block whitespace-nowrap drop-shadow-[0_1px_3px_rgba(255,255,255,0.95)]">
               Junio
             </span>
           </div>
@@ -415,7 +423,7 @@
 
       <!-- Texto Cursive Intermedio -->
       <div class="fade-in-up py-1" style="animation-delay: 0.35s;">
-        <p class="font-cursive text-2xl text-slate-800 leading-relaxed max-w-[320px] mx-auto">
+        <p class="cursive-elegant text-[34px] text-slate-900 leading-relaxed max-w-[320px] mx-auto">
           Te espero para compartir una tarde maravillosa
         </p>
       </div>
@@ -423,8 +431,8 @@
       <!-- 4. Contenido y Ubicación del Evento (Estilo abierto flotante del mockup) -->
       <div class="flex flex-col items-center gap-3.5 py-2 fade-in-up" style="animation-delay: 0.4s;">
         <div class="space-y-0.5 select-none">
-          <p class="text-4.5xl font-bebas tracking-[0.06em] text-slate-800 leading-none">LA LUCINDA NORTE,</p>
-          <p class="text-4.5xl font-bebas tracking-[0.06em] text-slate-800 leading-none">LOTE 101</p>
+          <p class="text-[40px] font-bebas tracking-[0.06em] text-slate-900 leading-none">LA LUCINDA NORTE,</p>
+          <p class="text-[40px] font-bebas tracking-[0.06em] text-slate-900 leading-none">LOTE 101</p>
         </div>
         
         <!-- Botón Cómo Llegar (Estilo Tarjeta Física) -->
@@ -440,8 +448,8 @@
 
       <!-- 5. Componentes de Confirmación de Asistencia (Estilo abierto flotante del mockup) -->
       <div class="flex flex-col items-center gap-3.5 py-2 fade-in-up" style="animation-delay: 0.45s;">
-        <p class="font-cursive text-3.5xl text-slate-800 select-none">
-          Tu presencia es muy importante para mi
+        <p class="cursive-elegant text-[42px] text-slate-900 select-none leading-relaxed text-center max-w-[360px] mx-auto mb-1">
+          Tu presencia es muy importante para mí
         </p>
 
         <!-- Botón Confirmar Asistencia (Estilo Tarjeta Física) -->
